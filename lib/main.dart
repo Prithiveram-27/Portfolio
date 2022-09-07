@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import './screens/Home_Screen.dart';
+import './screens/Auth_Screen.dart';
 import 'dart:async';
+import './screens/signup_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,15 +19,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  MainScreen(),
+      home: AuthScreen(),
+      routes: {
+        SignUpScreen.routeName: (context) => SignUpScreen(), 
+      },
     );
-  }
-}
-
-class MainScreen extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
