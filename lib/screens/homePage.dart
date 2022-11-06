@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_app/providers/googleSignInProvider.dart';
+import 'package:portfolio_app/providers/updateProfileProvider.dart';
 import 'package:portfolio_app/widgets/AppDrawer.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,12 @@ class HomePage extends StatelessWidget {
     } else if (hour >= 16) {
       return 'Good Evening';
     }
+  }
+
+  Future<void> getUserDetails(BuildContext context) async {
+    final provider = Provider.of<UpdateProfileDetails>(context, listen: false);
+    final userdata = await provider.getUserDetails();
+    Navigator.of(context).pushNamed("/ProfileScreen");
   }
 
   @override
@@ -46,8 +53,8 @@ class HomePage extends StatelessWidget {
         ],
         onTap: (index) {
           if (index == 1) {
-            Navigator.of(context).pushNamed("/ProfileScreen");
-          }
+            getUserDetails(context);
+          } else if (index == 2) {}
         },
       ),
       body: Column(

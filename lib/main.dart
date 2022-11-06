@@ -43,7 +43,15 @@ class MyApp extends StatelessWidget {
                 home: LandingPage(),
                 initialRoute: "/",
                 routes: {
-                  ProfileScreen.routeName: (context) => ProfileScreen(),
+                  ProfileScreen.routeName: (context) => ProfileScreen(
+                        UserDetails(
+                          email: "",
+                          knownTechnologies: '',
+                          name: '',
+                          phNo: '',
+                          userDesc: '',
+                        ),
+                      ),
                   EditProfileScreen.routeName: (context) => EditProfileScreen(),
                 },
               )),

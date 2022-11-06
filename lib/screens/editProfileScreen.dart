@@ -42,7 +42,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _phoneFocusNode.dispose();
     _emailFocusNode.dispose();
     _knownTechFocusNode.dispose();
-    _nameFocusNode.dispose();
+    _descTechFocusNode.dispose();
 
     super.dispose();
   }

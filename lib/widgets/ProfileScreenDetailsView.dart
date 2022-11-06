@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:portfolio_app/providers/updateProfileProvider.dart';
 
 import '../constants.dart';
 
 class ProfileDetailsView extends StatelessWidget {
   double screenHeight;
+  UserDetails userValues;
 
-  ProfileDetailsView(this.screenHeight);
+  ProfileDetailsView(this.screenHeight, this.userValues);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ProfileDetailsView extends StatelessWidget {
         children: [
           NameAndDesignation(),
           MediaData(),
-          PersonalData(screenHeight),
+          PersonalData(screenHeight, userValues),
         ],
       ),
     );
@@ -27,7 +29,9 @@ class ProfileDetailsView extends StatelessWidget {
 
 class PersonalData extends StatelessWidget {
   double screenHeight;
-  PersonalData(this.screenHeight);
+  UserDetails userValues;
+
+  PersonalData(this.screenHeight, this.userValues);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class PersonalData extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      ": prithiveram.chandrasekaran@gmail.com",
+                      userValues.email.toString(),
                       style: personalDataTheme,
                     )
                   ],

@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:portfolio_app/providers/updateProfileProvider.dart';
 import 'package:portfolio_app/widgets/AppDrawer.dart';
 
 import '../constants.dart';
@@ -8,7 +9,9 @@ import '../widgets/ProfileScreenDetailsView.dart';
 import '../widgets/profileScreenHeader.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final UserDetails userDetails;
+
+  ProfileScreen(this.userDetails);
 
   static var routeName = "/ProfileScreen";
 
@@ -42,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                ProfileDetailsView(height),
+                ProfileDetailsView(height, userDetails),
               ],
             ),
           ),
