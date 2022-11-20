@@ -39,9 +39,9 @@ class LandingPage extends StatelessWidget {
                   knownTechnologies: "",
                   userDesc: "",
             );
-            final provider =
-                Provider.of<UpdateProfileDetails>(context, listen: false);
-            provider.addUsersProfileDetails(userDetails);
+            // final provider =
+            //     Provider.of<UpdateProfileDetails>(context, listen: false);
+            // provider.addUsersProfileDetails(userDetails);
             return HomePage();
           } else {
             return MyPageView();

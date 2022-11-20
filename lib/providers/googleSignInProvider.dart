@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class GoogleSignInProvider with ChangeNotifier {
   final googleSignIn = GoogleSignIn();
   var _token;
+  var _userId;
 
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
@@ -17,6 +18,17 @@ class GoogleSignInProvider with ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  String get token {
+    if (_token != null) {
+      return _token!;
+    }
+    return "";
+  }
+
+  String? get userDetailsId {
+    return _userId;
   }
 
   Future googleLogin() async {
@@ -31,6 +43,7 @@ class GoogleSignInProvider with ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       _token = googleAuth.idToken;
+      _userId = googleAuth.idToken;
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       print(e.toString());
@@ -45,10 +58,8 @@ class GoogleSignInProvider with ChangeNotifier {
       await FirebaseAuth.instance.signOut();
       await googleSignIn.signOut();
       await googleSignIn.disconnect();
-
     } catch (e) {
       print(e.toString());
     }
   }
 }
-

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_app/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/googleSignInProvider.dart';
 import '../providers/updateProfileProvider.dart';
 
@@ -61,6 +62,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final provider =
         await Provider.of<UpdateProfileDetails>(context, listen: false);
     provider.addUsersProfileDetails(_editedUserDetails);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString("UserId");
+    if (userId != "" && userId != null) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override

@@ -27,7 +27,7 @@ class UserDetails {
 class UpdateProfileDetails with ChangeNotifier {
   List<UserDetails> _userDetails = [];
 
-  List<UserDetails> get orders {
+  List<UserDetails> get userData {
     return [..._userDetails];
   }
 
@@ -63,7 +63,7 @@ class UpdateProfileDetails with ChangeNotifier {
     }
   }
 
-  Future getUserDetails() async {
+  Future<void> getUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userId = prefs.getString("UserId");
     try {
@@ -77,13 +77,14 @@ class UpdateProfileDetails with ChangeNotifier {
       }
       for (var i = 0; i < extractedData.length; i++) {
         userData.add(UserDetails(
-          name: extractedData['name'],//value['id']['name'],
+          name: extractedData['name'], //value['id']['name'],
           phNo: extractedData['phoneNumner'],
           email: extractedData['email'],
           knownTechnologies: extractedData['knownTechnologies'],
           userDesc: extractedData['userDesc'],
         ));
         print(userData);
+        _userDetails = userData;
       }
       //extractedData.forEach((key, value) {});
       notifyListeners();

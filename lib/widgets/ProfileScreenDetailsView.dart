@@ -1,16 +1,16 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sort_child_properties_last, use_key_in_widget_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sort_child_properties_last, use_key_in_widget_constructors, must_be_immutable, unnecessary_null_comparison, prefer_if_null_operators
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio_app/providers/updateProfileProvider.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
 class ProfileDetailsView extends StatelessWidget {
   double screenHeight;
-  UserDetails userValues;
-
-  ProfileDetailsView(this.screenHeight, this.userValues);
+  ProfileDetailsView(this.screenHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -20,122 +20,144 @@ class ProfileDetailsView extends StatelessWidget {
         children: [
           NameAndDesignation(),
           MediaData(),
-          PersonalData(screenHeight, userValues),
+          PersonalData(screenHeight),
         ],
       ),
     );
   }
 }
 
-class PersonalData extends StatelessWidget {
+class PersonalData extends StatefulWidget {
   double screenHeight;
-  UserDetails userValues;
+  PersonalData(this.screenHeight);
 
-  PersonalData(this.screenHeight, this.userValues);
+  @override
+  State<PersonalData> createState() => _PersonalDataState();
+}
+
+class _PersonalDataState extends State<PersonalData> {
+  var userData;
+
+  @override
+  void initState() {
+    super.initState();
+    //getUserDetails(context);
+  }
+
+  Future<void> getUserDetails(BuildContext context) async {
+    await Provider.of<UpdateProfileDetails>(context, listen: false)
+        .getUserDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: screenHeight / 2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 2,
-          //color: Colors.red,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.phone_android),
-                    SizedBox(
-                      width: 10,
+    return FutureBuilder(
+      future: getUserDetails(context),
+      builder: ((BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Consumer<UpdateProfileDetails>(
+            builder: (context, user, _) => Container(
+              height: widget.screenHeight / 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 2,
+                  //color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.phone_android),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              user.userData.length > 0
+                                  ? user.userData[0].phNo.toString()
+                                  : "Not updated",
+                              style: TextStyle(
+                                fontFamily: "Lato-Regular",
+                                color: Color.fromRGBO(115, 115, 115, 1),
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.mail),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              user.userData.length > 0
+                                  ? user.userData[0].email.toString()
+                                  : "Not updated",
+                              style: personalDataTheme,
+                            )
+                          ],
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "About: ",
+                              style: personalDataHeadingTheme,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: Text(
+                              user.userData.length > 0
+                                  ? user.userData[0].userDesc.toString()
+                                  : "Not updated",
+                              style: personalDataTheme,
+                            ))
+                          ],
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Technologies:",
+                              style: personalDataHeadingTheme,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              user.userData.length > 0
+                                  ? user.userData[0].knownTechnologies
+                                      .toString()
+                                  : "Not updated",
+                              style: personalDataTheme,
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                    Text(
-                      ": +919629683161",
-                      style: TextStyle(
-                        fontFamily: "Satisfy-Regular",
-                        color: Color.fromRGBO(115, 115, 115, 1),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-                Divider(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.mail),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      userValues.email.toString(),
-                      style: personalDataTheme,
-                    )
-                  ],
-                ),
-                Divider(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "About: ",
-                      style: personalDataHeadingTheme,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
-                      style: personalDataTheme,
-                    ))
-                  ],
-                ),
-                Divider(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Technologies:",
-                      style: personalDataHeadingTheme,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.swift,
-                      color: Colors.orange,
-                    ),
-                    Text(
-                      " ,Flutter , C++, ",
-                      style: personalDataTheme,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.node,
-                      color: Colors.green,
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.docker,
-                      color: Colors.blue,
-                    ),
-                  ],
-                )
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        return Container();
+      }),
     );
   }
 }

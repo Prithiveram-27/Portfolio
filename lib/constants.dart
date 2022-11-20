@@ -8,12 +8,12 @@ const appCardColor = Color(0xffEAEAEA);
 const appSecondaryColor = Color(0xff73628A);
 
 const personalDataTheme = TextStyle(
-  fontFamily: "PTSansNarrow-Bold",
+  fontFamily: "Lato-Regular",
   color: Color.fromRGBO(115, 115, 115, 1),
 );
 
 const personalDataHeadingTheme = TextStyle(
-  fontFamily: "PTSansNarrow-Bold",
+  fontFamily: "Lato-Bold",
   color: Colors.black,
 );
 

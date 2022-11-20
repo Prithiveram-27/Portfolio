@@ -3,17 +3,29 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_app/providers/updateProfileProvider.dart';
 import 'package:portfolio_app/widgets/AppDrawer.dart';
-
+import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../widgets/ProfileScreenDetailsView.dart';
 import '../widgets/profileScreenHeader.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final UserDetails userDetails;
-
-  ProfileScreen(this.userDetails);
-
+class ProfileScreen extends StatefulWidget {
   static var routeName = "/ProfileScreen";
+  
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  var userData;
+
+  @override
+ 
+
+  // Future<void> getUserDetails(BuildContext context) async {
+  //   final provider = Provider.of<UpdateProfileDetails>(context, listen: false);
+  //    userData = await provider.getUserDetails();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                ProfileDetailsView(height, userDetails),
+                ProfileDetailsView(height),
               ],
             ),
           ),

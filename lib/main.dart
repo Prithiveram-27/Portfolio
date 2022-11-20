@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_app/screens/editProfileScreen.dart';
 import 'package:portfolio_app/screens/landing.dart';
+import 'package:portfolio_app/screens/newsOverview.dart';
+import 'package:portfolio_app/screens/newsScreen.dart';
 import 'package:portfolio_app/screens/profileScreen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -35,6 +37,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UpdateProfileDetails("", "", []),
         ),
+        ChangeNotifierProxyProvider<GoogleSignInProvider, UpdateProfileDetails>(
+          update: (ctx, auth, userData) => UpdateProfileDetails(
+              auth.token,
+              auth.userDetailsId.toString(),
+              userData!.userData == null ? [] : userData.userData),
+          create: (ctx) => UpdateProfileDetails("", "", []),
+        ),
       ],
       child: Consumer<GoogleSignInProvider>(
           builder: (context, auth, _) => MaterialApp(
@@ -43,16 +52,10 @@ class MyApp extends StatelessWidget {
                 home: LandingPage(),
                 initialRoute: "/",
                 routes: {
-                  ProfileScreen.routeName: (context) => ProfileScreen(
-                        UserDetails(
-                          email: "",
-                          knownTechnologies: '',
-                          name: '',
-                          phNo: '',
-                          userDesc: '',
-                        ),
-                      ),
+                  ProfileScreen.routeName: (context) => ProfileScreen(),
                   EditProfileScreen.routeName: (context) => EditProfileScreen(),
+                  NewsScreen.routeName: (context) => NewsScreen(),
+                  NewsOverView.routeName: (context) => NewsOverView(),
                 },
               )),
     );

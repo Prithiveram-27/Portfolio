@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
         ],
         onTap: (index) {
           if (index == 1) {
-            getUserDetails(context);
+            Navigator.of(context).pushNamed("/ProfileScreen");
           } else if (index == 2) {}
         },
       ),
